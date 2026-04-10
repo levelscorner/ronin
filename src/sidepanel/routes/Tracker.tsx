@@ -31,7 +31,7 @@ export function Tracker() {
       {applications.length === 0 ? (
         <EmptyState
           title="No evaluations yet"
-          description="Open any LinkedIn, Greenhouse, Ashby or Lever posting. The Ronin badge will appear — one click to evaluate."
+          description="Open any LinkedIn, Greenhouse, Ashby or Lever posting. The Trishula badge will appear — one click to evaluate."
         />
       ) : (
         <div className="flex-1 overflow-y-auto px-4 pb-5 space-y-2">

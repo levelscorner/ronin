@@ -1,5 +1,5 @@
 {
-  "name": "ronin",
+  "name": "trishula",
   "version": "0.1.0",
   "description": "AI-powered job search pipeline as a Chrome/Firefox browser extension. Evaluates job offers A-F, generates ATS-safe CVs, tracks applications. Ported from career-ops.",
   "private": true,

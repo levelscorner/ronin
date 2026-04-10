@@ -134,7 +134,7 @@ export function Onboarding() {
                   evaluated in seconds.
                 </h1>
                 <p className="text-[var(--text-sm)]" style={{ color: 'var(--color-ink-soft)' }}>
-                  Ronin scores every posting A{'\u2013'}F against your CV, tracks the pipeline, and
+                  Trishula scores every posting A{'\u2013'}F against your CV, tracks the pipeline, and
                   generates ATS-ready PDFs — all inside your browser.
                 </p>
                 <Button intent="accent" size="lg" onClick={next} className="w-full">
@@ -347,7 +347,7 @@ export function Onboarding() {
                   to evaluate. Everything appears here.
                 </p>
                 <Button intent="accent" size="lg" onClick={finish} className="w-full">
-                  Enter Ronin
+                  Enter Trishula
                 </Button>
               </>
             )}

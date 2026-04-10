@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <!-- Amber gradient for the trident -->
+    <linearGradient id="amber" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f5a623"/>
+      <stop offset="100%" stop-color="#c47d10"/>
+    </linearGradient>
+    <!-- Glow effect -->
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <!-- Subtle outer glow -->
+    <filter id="outerGlow">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feFlood flood-color="#f5a623" flood-opacity="0.3"/>
+      <feComposite in2="blur" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="248" fill="#0d0d12"/>
+  <circle cx="256" cy="256" r="246" fill="none" stroke="#f5a623" stroke-opacity="0.15" stroke-width="2"/>
+
+  <!-- Trishula (trident) -->
+  <g filter="url(#outerGlow)">
+    <!-- Central shaft -->
+    <rect x="249" y="140" width="14" height="280" rx="7" fill="url(#amber)"/>
+
+    <!-- Center prong (tallest) -->
+    <path d="M256 68 L270 140 L242 140 Z" fill="url(#amber)"/>
+    <!-- Center prong tip -->
+    <ellipse cx="256" cy="68" rx="6" ry="8" fill="#f5a623"/>
+
+    <!-- Left prong -->
+    <path d="M196 108 L220 150 Q230 140 242 140 L230 120 Z" fill="url(#amber)"/>
+    <!-- Left prong curve connecting to shaft -->
+    <path d="M230 120 Q236 132 242 140" stroke="url(#amber)" stroke-width="12" fill="none" stroke-linecap="round"/>
+    <!-- Left prong tip -->
+    <ellipse cx="196" cy="104" rx="5" ry="7" fill="#f5a623" transform="rotate(-20 196 104)"/>
+
+    <!-- Right prong -->
+    <path d="M316 108 L292 150 Q282 140 270 140 L282 120 Z" fill="url(#amber)"/>
+    <!-- Right prong curve connecting to shaft -->
+    <path d="M282 120 Q276 132 270 140" stroke="url(#amber)" stroke-width="12" fill="none" stroke-linecap="round"/>
+    <!-- Right prong tip -->
+    <ellipse cx="316" cy="104" rx="5" ry="7" fill="#f5a623" transform="rotate(20 316 104)"/>
+
+    <!-- Cross guard / damaru connector -->
+    <rect x="224" y="150" width="64" height="10" rx="5" fill="url(#amber)"/>
+
+    <!-- Small circles at prong tips (like energy points) -->
+    <circle cx="256" cy="62" r="3" fill="#fff" fill-opacity="0.8"/>
+    <circle cx="193" cy="100" r="2.5" fill="#fff" fill-opacity="0.7"/>
+    <circle cx="319" cy="100" r="2.5" fill="#fff" fill-opacity="0.7"/>
+
+    <!-- Base ornament -->
+    <circle cx="256" cy="420" r="14" fill="url(#amber)" opacity="0.8"/>
+    <circle cx="256" cy="420" r="8" fill="#0d0d12"/>
+    <circle cx="256" cy="420" r="4" fill="#f5a623"/>
+  </g>
+
+  <!-- Subtle radial glow behind the trident -->
+  <radialGradient id="centerGlow">
+    <stop offset="0%" stop-color="#f5a623" stop-opacity="0.08"/>
+    <stop offset="100%" stop-color="#f5a623" stop-opacity="0"/>
+  </radialGradient>
+  <circle cx="256" cy="240" r="180" fill="url(#centerGlow)"/>
+</svg>

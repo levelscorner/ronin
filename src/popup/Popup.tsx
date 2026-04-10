@@ -54,7 +54,7 @@ export default function Popup() {
             backgroundClip: 'text',
           }}
         >
-          Ronin
+          Trishula
         </span>
       </div>
 

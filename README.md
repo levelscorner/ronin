@@ -1,4 +1,4 @@
-# Ronin
+# Trishula
 
 > AI reconnaissance for your career.
 
@@ -19,7 +19,7 @@ Early development. See the `phases` list in `CLAUDE.md` for the roadmap. MVP goa
 
 ```bash
 git clone <this repo>
-cd ronin
+cd trishula
 npm install
 npm run dev           # Chrome
 npm run dev:firefox   # Firefox

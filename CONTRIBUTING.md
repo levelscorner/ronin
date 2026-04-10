@@ -1,12 +1,12 @@
-# Contributing to Ronin
+# Contributing to Trishula
 
 Thanks for considering a contribution. This guide gets you from clone to merged PR.
 
 ## Setup
 
 ```bash
-git clone https://github.com/levelscorner/ronin.git
-cd ronin
+git clone https://github.com/levelscorner/trishula.git
+cd trishula
 npm install
 npm run dev          # Chrome dev build + hot reload
 npm run dev:firefox  # Firefox dev build
@@ -18,7 +18,7 @@ Load the extension:
 
 ## Adding a new job board detector
 
-This is the most common contribution. Each detector teaches Ronin how to extract job data from a specific site.
+This is the most common contribution. Each detector teaches Trishula how to extract job data from a specific site.
 
 ### 1. Create the detector file
 
@@ -119,7 +119,7 @@ npm run build      # production build
 
 Then load the extension and navigate to a job posting on your board. Open devtools console. You should see either:
 - The floating badge appears (extraction succeeded)
-- `[ronin] yourboard matched <url> but extract() returned null` (selectors need fixing)
+- `[trishula] yourboard matched <url> but extract() returned null` (selectors need fixing)
 
 ### 6. Add a test fixture (optional but appreciated)
 

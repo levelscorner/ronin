@@ -2,7 +2,7 @@
  * Live testing on real LinkedIn and Naukri pages.
  *
  * This test launches Chrome with:
- * - The Ronin extension loaded
+ * - The Trishula extension loaded
  * - A copy of your Chrome profile (so you're logged in)
  *
  * IMPORTANT: Close Chrome before running this test.
@@ -27,7 +27,7 @@ let extensionId: string;
 
 test.beforeAll(async () => {
   // Copy the Chrome profile to a temp dir so we don't lock the original
-  const tmpProfile = path.join(os.tmpdir(), `ronin-test-profile-${Date.now()}`);
+  const tmpProfile = path.join(os.tmpdir(), `trishula-test-profile-${Date.now()}`);
   fs.mkdirSync(tmpProfile, { recursive: true });
 
   // Copy essential profile files (cookies, login sessions)
@@ -104,7 +104,7 @@ test('LinkedIn: badge appears on a job detail page', async () => {
   }
 
   // Check for badge
-  const badgeHost = page.locator('#ronin-badge-host');
+  const badgeHost = page.locator('#trishula-badge-host');
   const badgeExists = await badgeHost.count();
   console.log(`LinkedIn badge found: ${badgeExists > 0}`);
 
@@ -114,7 +114,7 @@ test('LinkedIn: badge appears on a job detail page', async () => {
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
   await page.waitForTimeout(1000);
-  const extErrors = errors.filter((e) => e.includes('ronin'));
+  const extErrors = errors.filter((e) => e.includes('trishula'));
   console.log(`Extension errors: ${extErrors.length}`);
 
   await page.close();
@@ -137,7 +137,7 @@ test('Naukri: badge appears on a job detail page', async () => {
   await page.screenshot({ path: 'e2e/screenshots/naukri-search.png', fullPage: false });
 
   // Check if content script injected the badge host
-  const badgeOnSearch = page.locator('#ronin-badge-host');
+  const badgeOnSearch = page.locator('#trishula-badge-host');
   const badgeOnSearchExists = await badgeOnSearch.count();
   console.log(`Naukri search page - badge host: ${badgeOnSearchExists > 0}`);
 
@@ -152,7 +152,7 @@ test('Naukri: badge appears on a job detail page', async () => {
   await page.waitForTimeout(2000);
 
   // Check for badge on detail page
-  const badge = page.locator('#ronin-badge-host');
+  const badge = page.locator('#trishula-badge-host');
   const badgeExists = await badge.count();
   const badgeVisible = badgeExists > 0 ? await badge.isVisible().catch(() => false) : false;
   console.log(`Naukri detail page - badge host: ${badgeExists > 0}, visible: ${badgeVisible}`);
@@ -176,7 +176,7 @@ test('Naukri: badge appears on a job detail page', async () => {
   // Check console for detector debug messages
   const consoleMessages: string[] = [];
   page.on('console', (msg) => {
-    if (msg.text().includes('ronin')) consoleMessages.push(msg.text());
+    if (msg.text().includes('trishula')) consoleMessages.push(msg.text());
   });
   await page.waitForTimeout(1000);
   for (const msg of consoleMessages) {

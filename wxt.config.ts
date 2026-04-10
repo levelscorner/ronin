@@ -7,10 +7,16 @@ export default defineConfig({
   srcDir: 'src',
   modules: ['@wxt-dev/module-react'],
   manifest: {
-    name: 'Ronin',
-    short_name: 'Ronin',
+    name: 'Trishula',
+    short_name: 'Trishula',
     description:
       'AI-powered job evaluation — score, track, and generate tailored CVs from any job posting.',
+    icons: {
+      16: 'icon-16.png',
+      32: 'icon-32.png',
+      48: 'icon-48.png',
+      128: 'icon-128.png',
+    },
     version: '0.1.0',
 
     permissions: [
@@ -49,14 +55,12 @@ export default defineConfig({
       'https://api.anthropic.com/*',
     ],
     action: {
-      default_title: 'Ronin',
+      default_title: 'Trishula',
       default_popup: 'popup.html',
     },
     side_panel: {
       default_path: 'sidepanel.html',
     },
-    // icons intentionally omitted until real PNGs land in src/public/icons/.
-    // Chrome uses a default puzzle-piece icon meanwhile.
     web_accessible_resources: [
       {
         resources: ['fonts/*.woff2'],

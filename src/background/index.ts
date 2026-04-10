@@ -7,7 +7,7 @@ import { getDb } from './storage/db';
 
 export function main(): void {
   // eslint-disable-next-line no-console
-  console.log('[ronin] background worker starting');
+  console.log('[trishula] background worker starting');
 
   installMessageRouter();
 
@@ -23,7 +23,7 @@ export function main(): void {
     .open()
     .catch((err) => {
       // eslint-disable-next-line no-console
-      console.error('[ronin] failed to open IndexedDB', err);
+      console.error('[trishula] failed to open IndexedDB', err);
     });
 
   // On install, flag onboarding incomplete so the side panel knows to greet.
@@ -40,7 +40,7 @@ export function main(): void {
       seedDevFixtures().then((seeded) => {
         if (seeded) {
           // eslint-disable-next-line no-console
-          console.log('[ronin] dev fixtures seeded (profile + CV + customization)');
+          console.log('[trishula] dev fixtures seeded (profile + CV + customization)');
         }
       }),
     ).catch(() => undefined);

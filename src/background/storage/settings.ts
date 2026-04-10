@@ -7,7 +7,7 @@ import type { ExtensionSettings } from '../../shared/types';
 import { DEFAULT_MODEL_ID } from '../../shared/constants';
 import { zExtensionSettings } from '../../shared/schemas';
 
-const STORAGE_KEY = 'ronin:settings';
+const STORAGE_KEY = 'trishula:settings';
 
 const DEFAULTS: ExtensionSettings = Object.freeze({
   anthropicApiKey: '',
@@ -29,7 +29,7 @@ export async function getSettings(): Promise<ExtensionSettings> {
   const parsed = zExtensionSettings.safeParse(merged);
   if (!parsed.success) {
     // eslint-disable-next-line no-console
-    console.warn('[ronin] invalid settings in storage, resetting to defaults', parsed.error);
+    console.warn('[trishula] invalid settings in storage, resetting to defaults', parsed.error);
     await chrome.storage.local.set({ [STORAGE_KEY]: DEFAULTS });
     return { ...DEFAULTS };
   }

@@ -25,14 +25,14 @@ describe('mountBadge', () => {
 
   it('has display:none when initial job is null', () => {
     controller = mountBadge(() => {}, null);
-    const host = document.getElementById('ronin-badge-host');
+    const host = document.getElementById('trishula-badge-host');
     expect(host).not.toBeNull();
     expect(host!.style.display).toBe('none');
   });
 
   it('has display:block when initial job is provided', () => {
     controller = mountBadge(() => {}, FAKE_JOB);
-    const host = document.getElementById('ronin-badge-host');
+    const host = document.getElementById('trishula-badge-host');
     expect(host).not.toBeNull();
     expect(host!.style.display).toBe('block');
   });

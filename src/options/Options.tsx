@@ -23,7 +23,7 @@ export default function Options() {
           className="font-[var(--font-display)] text-[var(--text-3xl)] font-semibold"
           style={{ color: 'var(--color-ink)' }}
         >
-          Ronin
+          Trishula
         </h1>
         <p style={{ color: 'var(--color-ink-soft)' }}>
           Settings live inside the side panel. Click the toolbar icon to open it.

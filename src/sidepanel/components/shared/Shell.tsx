@@ -90,7 +90,7 @@ export function Shell({ children }: PropsWithChildren) {
               backgroundClip: 'text',
             }}
           >
-            Ronin
+            Trishula
           </span>
         </div>
         <nav className="flex items-center gap-0.5 text-[var(--text-xs)]" role="navigation" aria-label="Main navigation">

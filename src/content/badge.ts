@@ -1,4 +1,4 @@
-// Floating "Evaluate with Ronin" badge injected into job pages.
+// Floating "Evaluate with Trishula" badge injected into job pages.
 // Shadow DOM isolated so host CSS can't bleed in, and pinned bottom-right
 // with Framer-free vanilla CSS transitions to keep the content bundle small.
 
@@ -16,7 +16,7 @@ export function mountBadge(
   let currentJob: JobPosting | null = initial;
 
   const host = document.createElement('div');
-  host.id = 'ronin-badge-host';
+  host.id = 'trishula-badge-host';
   host.style.cssText = `
     position: fixed;
     right: 24px;
@@ -86,7 +86,7 @@ export function mountBadge(
   const button = document.createElement('button');
   button.className = 'badge';
   button.innerHTML =
-    '<span class="dot"></span><span class="label">Evaluate with Ronin<small>A–F scoring · streaming</small></span>';
+    '<span class="dot"></span><span class="label">Evaluate with Trishula<small>A–F scoring · streaming</small></span>';
   button.addEventListener('click', () => {
     if (currentJob) onClick(currentJob);
   });

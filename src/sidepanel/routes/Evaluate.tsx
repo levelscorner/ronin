@@ -78,7 +78,7 @@ export function Evaluate() {
       <PageTransition>
         <EmptyState
           title="Ready to evaluate"
-          description="Open a job posting in another tab and click the Ronin badge — or paste a JD below."
+          description="Open a job posting in another tab and click the Trishula badge — or paste a JD below."
         >
           <Card className="w-full max-w-md p-4 space-y-3 text-left">
             {/* floating label textarea */}
