@@ -78,7 +78,7 @@ export async function evaluateJob(
             model: settings.selectedModel,
             system,
             messages: [{ role: 'user', content: userMessage }],
-            maxTokens: 12000,
+            maxTokens: 4096,
             temperature: 0.3,
           },
           (delta) => emit({ type: 'bg:evalDelta', tempId, delta }),
@@ -159,38 +159,34 @@ function buildUserMessage(job: JobPosting): string {
   const jsonContract = `
 ---
 
-## Output Contract
+## Output Format
 
-You MUST end your response with exactly ONE fenced JSON block. This is the structured evaluation result that the extension parses. Do NOT skip any field. Every field is required.
+Respond with ONLY a single JSON object. No prose, no markdown, no explanation before or after. Your entire response must be valid JSON matching this exact schema:
 
-\`\`\`json
 {
   "archetype": "<one of: ai_platform, agentic, technical_pm, solutions_architect, forward_deployed, transformation>",
   "dimensions": {
-    "matchCv": { "score": <number 1 to 5>, "rationale": "<why this score>", "evidence": ["<quote from CV or JD>"] },
-    "northStar": { "score": <number 1 to 5>, "rationale": "<why>", "evidence": [] },
-    "comp": { "score": <number 1 to 5>, "rationale": "<why>", "evidence": [] },
-    "cultural": { "score": <number 1 to 5>, "rationale": "<why>", "evidence": [] },
-    "redFlags": { "score": <number 1 to 5>, "rationale": "<why>", "evidence": [] }
+    "matchCv": { "score": <1-5>, "rationale": "<2-3 sentences on CV fit>", "evidence": ["<specific skill or experience from CV that matches>"] },
+    "northStar": { "score": <1-5>, "rationale": "<2-3 sentences on career alignment>", "evidence": [] },
+    "comp": { "score": <1-5>, "rationale": "<2-3 sentences on compensation fit>", "evidence": [] },
+    "cultural": { "score": <1-5>, "rationale": "<2-3 sentences on culture/team fit>", "evidence": [] },
+    "redFlags": { "score": <1-5>, "rationale": "<2-3 sentences on concerns>", "evidence": [] }
   },
-  "globalScore": <number like 3.8>,
-  "verdict": "<one of: strong, good, borderline, weak>",
-  "tldr": "<one sentence summary of fit>",
-  "gaps": [{ "requirement": "<what's missing>", "severity": "<blocker or significant or minor>", "mitigation": "<how to address>" }],
-  "dealBreakers": ["<any dealbreakers, or empty array>"],
-  "keywords": ["<15 to 20 ATS keywords extracted from the JD>"],
-  "reportMarkdown": "<your full analysis above as markdown>"
+  "globalScore": <weighted average 1.0-5.0>,
+  "verdict": "<strong|good|borderline|weak>",
+  "tldr": "<one sentence: should the candidate apply or not, and why>",
+  "gaps": [{ "requirement": "<missing skill or experience>", "severity": "<blocker|significant|minor>", "mitigation": "<how to address in application>" }],
+  "dealBreakers": [],
+  "keywords": ["<15-20 ATS-relevant keywords from the JD>"],
+  "reportMarkdown": "<a concise 500-800 word markdown summary covering: role overview, fit assessment, key strengths, gaps, compensation analysis, and recommendation>"
 }
-\`\`\`
 
-CRITICAL RULES:
-1. The JSON block MUST be the very last thing in your response.
-2. Every field shown above is REQUIRED. Do not omit any.
-3. All 5 dimensions (matchCv, northStar, comp, cultural, redFlags) must be present.
-4. Scores are numbers (not strings), between 1 and 5.
-5. globalScore is a decimal like 3.8 (not a string).
-6. Keep reportMarkdown concise (under 2000 chars) to avoid truncation.
-7. No text after the closing \`\`\` fence.
+RULES:
+1. Output ONLY the JSON object. No \`\`\`json fences. No text before or after.
+2. Every field is REQUIRED.
+3. All scores are numbers, not strings.
+4. reportMarkdown is a self-contained summary (the only narrative the user sees).
+5. Keep reportMarkdown under 800 words to minimize cost.
 `;
 
   return `${header}\n\n## Job Description\n\n${job.descriptionMarkdown}\n${jsonContract}`;

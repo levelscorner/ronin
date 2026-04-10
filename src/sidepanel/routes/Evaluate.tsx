@@ -119,6 +119,8 @@ export function Evaluate() {
   }
 
   // streaming or done — show live buffer and dial
+  const streamProgress = status === 'streaming' ? parseStreamProgress(buffer) : null;
+
   return (
     <PageTransition>
       <div className="px-5 pt-5 pb-3 flex items-center gap-5">
@@ -135,8 +137,15 @@ export function Evaluate() {
             {result?.application.role ?? 'Evaluating…'}
           </h2>
           <p className="text-[var(--text-sm)] truncate" style={{ color: 'var(--color-ink-soft)' }}>
-            {result?.application.company ?? 'Analyzing job description…'}
+            {result?.application.company ?? streamProgress?.step ?? 'Analyzing job description…'}
           </p>
+          {status === 'streaming' && streamProgress && (
+            <p className="text-[var(--text-xs)] mt-1" style={{ color: 'var(--color-ink-faint)' }}>
+              {streamProgress.tldr || (streamProgress.verdict
+                ? `Verdict: ${streamProgress.verdict}`
+                : `Scoring dimensions…`)}
+            </p>
+          )}
         </div>
       </div>
 
@@ -297,8 +306,51 @@ export function Evaluate() {
 }
 
 function estimateScoreFromBuffer(buffer: string): number {
-  // Pull the first "globalScore": X.X that shows up in the streamed JSON,
-  // so the dial starts moving as soon as the model commits a number.
   const m = buffer.match(/"globalScore"\s*:\s*(\d(?:\.\d+)?)/);
   return m ? Number(m[1]) : 0;
+}
+
+/** Parse partial JSON stream to show progress to the user. */
+function parseStreamProgress(buffer: string): {
+  step: string;
+  verdict: string | null;
+  tldr: string | null;
+} {
+  // Detect which fields have appeared in the stream so far
+  const hasArchetype = buffer.includes('"archetype"');
+  const hasDimensions = buffer.includes('"dimensions"');
+  const hasMatchCv = buffer.includes('"matchCv"');
+  const hasNorthStar = buffer.includes('"northStar"');
+  const hasComp = buffer.includes('"comp"');
+  const hasCultural = buffer.includes('"cultural"');
+  const hasRedFlags = buffer.includes('"redFlags"');
+  const hasGlobalScore = buffer.includes('"globalScore"');
+  const hasVerdict = buffer.includes('"verdict"');
+  const hasTldr = buffer.includes('"tldr"');
+  const hasGaps = buffer.includes('"gaps"');
+  const hasKeywords = buffer.includes('"keywords"');
+
+  // Extract verdict and tldr if available
+  const verdictMatch = buffer.match(/"verdict"\s*:\s*"(strong|good|borderline|weak)"/);
+  const tldrMatch = buffer.match(/"tldr"\s*:\s*"([^"]+)"/);
+
+  let step = 'Starting evaluation…';
+  if (hasKeywords) step = 'Extracting ATS keywords…';
+  else if (hasGaps) step = 'Identifying gaps…';
+  else if (hasTldr) step = 'Writing summary…';
+  else if (hasVerdict) step = 'Determining verdict…';
+  else if (hasGlobalScore) step = 'Computing overall score…';
+  else if (hasRedFlags) step = 'Checking red flags…';
+  else if (hasCultural) step = 'Assessing cultural fit…';
+  else if (hasComp) step = 'Analyzing compensation…';
+  else if (hasNorthStar) step = 'Evaluating career alignment…';
+  else if (hasMatchCv) step = 'Matching against CV…';
+  else if (hasDimensions) step = 'Scoring dimensions…';
+  else if (hasArchetype) step = 'Identifying role archetype…';
+
+  return {
+    step,
+    verdict: verdictMatch?.[1] ?? null,
+    tldr: tldrMatch?.[1] ?? null,
+  };
 }
