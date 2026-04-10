@@ -41,7 +41,12 @@ export function extractCurrentJob(): JobPosting | null {
   const detector = pickDetector(url);
   if (!detector) return null;
   try {
-    return detector.extract();
+    const result = detector.extract();
+    if (!result) {
+      // eslint-disable-next-line no-console
+      console.debug(`[career-ops] ${detector.id} matched ${url.href} but extract() returned null — check selectors`);
+    }
+    return result;
   } catch (err) {
     // eslint-disable-next-line no-console
     console.warn(`[career-ops] ${detector.id} detector failed`, err);

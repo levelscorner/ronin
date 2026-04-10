@@ -28,7 +28,7 @@ npm run dev:firefox   # Firefox
 Then:
 
 - **Chrome:** `chrome://extensions` → Developer mode → Load unpacked → `.output/chrome-mv3-dev`
-- **Firefox:** `about:debugging#/runtime/this-firefox` → Load Temporary Add-on → `.output/firefox-mv3-dev/manifest.json`
+- **Firefox:** `about:debugging#/runtime/this-firefox` → Load Temporary Add-on → `.output/firefox-mv2/manifest.json`
 
 Open the side panel from the extension toolbar icon. On first run the onboarding wizard asks for your Anthropic API key, CV, and profile.
 
